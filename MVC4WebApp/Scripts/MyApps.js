@@ -1,59 +1,68 @@
 ﻿class App1 {
 
     constructor(rootElementId) {
-        $(rootElementId).html();
+        $(rootElementId).html("Calling Teleport API...");
 
-        $.get("https://api.teleport.org/api/cities/",
+        $.ajax({
+            url: "https://api.teleport.org/api/cities",
+            method: "get",
+            async: false,
+            beforeSend: function () {
+                if (console)
+                    console.log("Calling Teleport API...");
+            }
+        })
+        .done(
             function (data) {
-                if (data) {
-                    if (console)
+                if (console) {
+                    console.log("Teleport API call success.");
+                    if (data) {
                         console.log(data);
+                    }
                 }
             })
-            .done(
-                function (data) {
-                    if (data) {
-                        if (console)
-                            console.log(data);
-                    }
-                })
-            .fail(
-                function (msg) {
+        .fail(
+            function (msg) {
+                if (console) {
+                    console.log("Teleport API call failed.");
                     if (msg) {
-                        if (console)
-                            console.log(msg);
+                        console.log(msg);
                     }
                 }
-            );
-    }
-}
+            }
+        );
 
-class App2 {
+        $(rootElementId).html("Getting unsplash resource...");
 
-    constructor(rootElementId) {
-        $(rootElementId).html();
-
-        $.get("https://unsplash.com/photos/kelqkytHsPM",
+        $.ajax({
+            url: "https://unsplash.com/photos/kelqkytHsPM",
+            method: "get",
+            async: false,
+            beforeSend: function () {
+                if (console)
+                    console.log("Getting unsplash resource...");
+            }
+        })
+        .done(
             function (data) {
-                if (data) {
-                    if (console)
+                if (console) {
+                    console.log("unsplash resource get success.");
+                    if (data) {
                         console.log(data);
+                    }
                 }
             })
-            .done(
-                function (data) {
-                    if (data) {
-                        if (console)
-                            console.log(data);
-                    }
-                })
-            .fail(
-                function (msg) {
+        .fail(
+            function (msg) {
+                if (console) {
+                    console.log("unsplash resource get failed.");
                     if (msg) {
-                        if (console)
-                            console.log(msg);
+                        console.log(msg);
                     }
                 }
-            );
+            }
+        );
+
+        $(rootElementId).html("Completed");
     }
 }
